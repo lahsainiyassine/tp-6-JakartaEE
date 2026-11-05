@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un utilisateur</title>
+    <style>
+        .error {
+            color: red;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: inline-block;
+            width: 70px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ajouter un utilisateur</h1>
+
+    <div th:if="${#fields.hasErrors('${user.*}')}" class="error">
+        <ul>
+            <li th:each="err : ${#fields.errors('${user.*}')}" th:text="${err}"></li>
+        </ul>
+    </div>
+
+    <form th:action="@{/adduser}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" th:field="*{name}" />
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email :</label>
+            <input type="email" id="email" th:field="*{email}" />
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <button type="submit">Enregistrer</button>
+    </form>
+
+    <br/>
+    <a th:href="@{/}">Retour à la liste</a>
+</body>
+</html>
